@@ -44,6 +44,7 @@ var model = {
 // add cat links to DOM
 var view = {
 	addLinksToDom: function(array){
+		$('#links').empty();
 		$('#links').append('<ul id="link-items">')
 			for(var i=0; i<array.length; i++){
 				var catname = array[i].name;
@@ -103,7 +104,11 @@ var view = {
 		})
 	},
 	addSaveButtonListener: function(){
-
+		$('#save').click(function(){
+			octopus.save();
+			console.log('save clicked');
+			console.log(octopus.currentcat);
+		})
 	}
 }
 
@@ -113,12 +118,19 @@ var octopus = {
 	currentcat: null,
 	cats: null,
 	init: function() {
-		this.cats = model.createCats(['Gustav', 'Charles', 'Bjorn', 'Hans', 'Dagobert']);
+		this.cats = model.createCats(model.names);
 		view.addLinksToDom(this.cats);
 		view.updateDisplayArea(this.cats[0])();
 		this.currentcat = this.cats[0];
 		view.addAdminButtonListener();
 	},
+	save: function(){
+			this.currentcat.name = $('#name').val();
+			this.currentcat.image = $('#iUrl').val();
+			this.currentcat.counter = $('#clicks').val();
+			view.addLinksToDom(this.cats);
+			view.updateDisplayArea(this.currentcat)();
+	}
 
 
 }
