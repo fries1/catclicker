@@ -74,15 +74,21 @@ var view = {
 				}
 
 			}());
+			octopus.currentcat = obj;
 		}
 	},
 
 	addButtonListener: function(){
-
 		$('#admin').click(function(){
+			var ccat = octopus.currentcat;
 			console.log('Button clicked');
-			var admin_input = ('<div> </div>')
-			$('.input-area').append('<div >')
+			$('.input-area').empty();
+			var admin_input = ('<div>' +
+				'<p><label>Name <input type="text" id="name" value=' + ccat.name + '></label></p>' +
+				'<p><label>ImgURL <input type="text" id="iUrl" value=' + ccat.image + '></label></p>' +
+				'<p><label>#clicks <input type="text" id="clicks" value=' + ccat.counter + '></label></p>' +
+				'</div>');
+			$('.input-area').append(admin_input);
 		})
 	}
 }
@@ -90,12 +96,16 @@ var view = {
 // octopus
 var octopus = {
 	adminmode: false,
+	currentcat: null,
+	cats: null,
 	init: function() {
-		var cats = model.createCats(['Gustav', 'Charles', 'Bjorn', 'Hans', 'Dagobert']);
-		view.addLinksToDom(cats);
-		view.updateDisplayArea(cats[0])();
+		this.cats = model.createCats(['Gustav', 'Charles', 'Bjorn', 'Hans', 'Dagobert']);
+		view.addLinksToDom(this.cats);
+		view.updateDisplayArea(this.cats[0])();
+		this.currentcat = this.cats[0];
 		view.addButtonListener();
-	}
+	},
+
 
 }
 
