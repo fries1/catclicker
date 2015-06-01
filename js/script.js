@@ -78,7 +78,7 @@ var view = {
 		}
 	},
 
-	addButtonListener: function(){
+	addAdminButtonListener: function(){
 		$('#admin').click(function(){
 			var ccat = octopus.currentcat;
 			console.log('Button clicked');
@@ -89,7 +89,21 @@ var view = {
 				'<p><label>#clicks <input type="text" id="clicks" value=' + ccat.counter + '></label></p>' +
 				'</div>');
 			$('.input-area').append(admin_input);
+			$('.input-area').append('<p><button id="save">Save</button>' +
+				'<button id="cancel">Cancel</button>' +
+				'</p>');
+			view.addCancelButtonListener();
+			view.addSaveButtonListener();
 		})
+	},
+	addCancelButtonListener: function(){
+		$('#cancel').click(function(){
+			console.log('cancel clicked');
+			$('.input-area').empty();
+		})
+	},
+	addSaveButtonListener: function(){
+
 	}
 }
 
@@ -103,7 +117,7 @@ var octopus = {
 		view.addLinksToDom(this.cats);
 		view.updateDisplayArea(this.cats[0])();
 		this.currentcat = this.cats[0];
-		view.addButtonListener();
+		view.addAdminButtonListener();
 	},
 
 
